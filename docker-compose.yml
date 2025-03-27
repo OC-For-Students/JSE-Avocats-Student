@@ -31,10 +31,16 @@ services:
       WORDPRESS_DB_NAME: bddwp
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: root
-      WORDPRESS_CONFIG_EXTRA=define('WP_HOME', 'https://' . $_SERVER['HTTP_HOST']); define('WP_SITEURL', 'https://' . $_SERVER['HTTP_HOST']);
+      CODESPACE_NAME: ${CODESPACE_NAME}
     depends_on:
       jse-avocats-bdd:
         condition: service_healthy
   
+  mono_adminer:
+    container_name: mono_adminer
+    image: adminer
+    ports:
+    - 8086:8080
+    
 volumes:
   db_data:
