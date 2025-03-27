@@ -1,7 +1,7 @@
 services:
   jse-avocats-bdd:
     container_name: jse-avocats-bdd
-    image: mysql:8.0
+    image: mariadb:11.7.2
     command: [
         '--character-set-server=utf8mb4',
         '--collation-server=utf8mb4_unicode_ci'
@@ -12,6 +12,12 @@ services:
     environment:
       MYSQL_DATABASE: bddwp
       MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: ['CMD', '/usr/local/bin/healthcheck.sh', '--innodb_initialized']
+      start_period: 15s
+      interval: 10s
+      timeout: 10s
+      retries: 5
 
   jse-avocats-wp:
     container_name: jse-avocats-wp
@@ -25,6 +31,9 @@ services:
       WORDPRESS_DB_NAME: bddwp
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: root
+    depends_on:
+      jse-avocats-bdd:
+        condition: service_healthy
   
 volumes:
   db_data:
