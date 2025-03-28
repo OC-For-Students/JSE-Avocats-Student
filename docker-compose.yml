@@ -21,7 +21,7 @@ services:
 
   jse-avocats-wp:
     container_name: jse-avocats-wp
-    image: ghcr.io/oc-for-students/jse-avocats:1-0-3
+    image: ghcr.io/oc-for-students/jse-avocats:1-1-0
     ports:
       - 8081:80
     volumes:
@@ -36,8 +36,8 @@ services:
       jse-avocats-bdd:
         condition: service_healthy
   
-  mono_adminer:
-    container_name: mono_adminer
+  jse_adminer:
+    container_name: jse_adminer
     image: adminer
     ports:
     - 8086:8080
